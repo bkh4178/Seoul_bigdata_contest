@@ -24,5 +24,8 @@ __pycache__/
 
 # Environment / secrets
 .env
-.env.*geonho/data/서울시 건축물대장 표제부.csv
+.env.*
+
+geonho/data/서울시 건축물대장 표제부.csv
 data/Index_data/
+Index_data/
