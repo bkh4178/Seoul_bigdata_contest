@@ -133,16 +133,9 @@ S2_CENTERS = s2_df[["rep_x","rep_y"]].values
 # pool_df는 기존센터+HVI+Demand 필터 모두 적용된 것
 # 기존 센터 행정동 = score_df에 있지만 pool_df에도 없고 S4에도 없는 것들 중 모아센터 위치
 # → 직접 공간조인으로 추출
-moa_joined_s3 = gpd.sjoin(
-    moa_gdf[["geometry"]],
-    shp[["행정동코드","geometry"]],
-    how="left", predicate="within"
-)
-moa_codes_s3 = set(moa_joined_s3["행정동코드"].dropna())
 
-s3_df = score_df[
-    ~score_df["행정동코드"].isin(moa_codes_s3)
-].nlargest(N_NEW, "Final_Score_4")
+# S3: score_df 전체에서 Final_Score_4 상위 14개 (위치제약 없음 — 기존센터 행정동 포함)
+s3_df = score_df.nlargest(N_NEW, "Final_Score_4")
 S3_CENTERS = s3_df[["rep_x","rep_y"]].values
 
 log(f"\n  S2 Demand 상위 14: {list(s2_df['행정동'])}")
